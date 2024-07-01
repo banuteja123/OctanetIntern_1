@@ -1,0 +1,188 @@
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Web Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 16px 16px 0 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 48px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .input-section {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            font-size: 18px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #17a2b8;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #138496;
+        }
+
+        .task-lists {
+            background-color: #f8f9fa;
+            border-radius: 0 0 16px 16px;
+            padding: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+
+        li:hover {
+            background-color: #f2f4f6;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+        }
+
+        .complete-button {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>To-Do List Web Page</h1>
+        </header>
+        <div class="input-section">
+            <input type="text" id="taskTitle" placeholder="Task Title">
+            <textarea id="taskDescription" placeholder="Task Description"></textarea>
+            <button onclick="addTask()">Add Task</button>
+        </div>
+
+        <div class="task-lists">
+            <h3>Pending Tasks</h3>
+            <ul id="pendingTasks"></ul>
+
+            <h3>Completed Tasks</h3>
+            <ul id="completedTasks"></ul>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            var taskTitle = document.getElementById("taskTitle").value.trim();
+            var taskDescription = document.getElementById("taskDescription").value.trim();
+
+            if (taskTitle !== "") {
+                var listItem = document.createElement("li");
+                listItem.innerHTML = `
+                    <div>
+                        <h3>${taskTitle}</h3>
+                        <p>${taskDescription}</p>
+                    </div>
+                    <div>
+                        <button class="complete-button" onclick="completeTask(this.parentNode.parentNode)">Complete</button>
+                        <button class="delete-button" onclick="deleteTask(this.parentNode.parentNode)">Delete</button>
+                    </div>
+                `;
+                document.getElementById("pendingTasks").appendChild(listItem);
+                document.getElementById("taskTitle").value = "";
+                document.getElementById("taskDescription").value = "";
+            }
+        }
+
+        function completeTask(item) {
+            item.classList.add("completed");
+            document.getElementById("completedTasks").appendChild(item);
+        }
+
+        function deleteTask(item) {
+            item.remove();
+        }
+    </script>
+</body>
+</html>
